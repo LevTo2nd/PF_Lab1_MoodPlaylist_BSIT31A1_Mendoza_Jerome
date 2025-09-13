@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36408.4 d17.14
+VisualStudioVersion = 17.14.36408.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoodPlaylistGenerator", "MoodPlaylistGenerator.csproj", "{8D5F83DE-A29F-737B-BE4F-8D77763EB2AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoodPlaylist.SQLite.Repository.", "..\MoodPlaylist.SQLite.Repository\MoodPlaylist.SQLite.Repository..csproj", "{67ABE79E-D0CD-4BE3-9F87-4AF019798A2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoodPlaylist.SQLite.Services", "..\MoodPlaylist.SQLite.Services\MoodPlaylist.SQLite.Services.csproj", "{803B1C0B-291F-43E2-9F5C-76B3EB8C929A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{8D5F83DE-A29F-737B-BE4F-8D77763EB2AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D5F83DE-A29F-737B-BE4F-8D77763EB2AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D5F83DE-A29F-737B-BE4F-8D77763EB2AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67ABE79E-D0CD-4BE3-9F87-4AF019798A2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67ABE79E-D0CD-4BE3-9F87-4AF019798A2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67ABE79E-D0CD-4BE3-9F87-4AF019798A2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67ABE79E-D0CD-4BE3-9F87-4AF019798A2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{803B1C0B-291F-43E2-9F5C-76B3EB8C929A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{803B1C0B-291F-43E2-9F5C-76B3EB8C929A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{803B1C0B-291F-43E2-9F5C-76B3EB8C929A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{803B1C0B-291F-43E2-9F5C-76B3EB8C929A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

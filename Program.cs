@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using MoodPlaylistGenerator.Data;
-using MoodPlaylistGenerator.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using MoodPlaylist.SQLite.Repository.Data;
+using MoodPlaylist.SQLite.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

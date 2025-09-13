@@ -15,4 +15,13 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MoodPlaylist.SQLite.Repository\MoodPlaylist.SQLite.Repository..csproj" />
+    <ProjectReference Include="..\MoodPlaylist.SQLite.Services\MoodPlaylist.SQLite.Services.csproj" />
+  </ItemGroup>
+
 </Project>

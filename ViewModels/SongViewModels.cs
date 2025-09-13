@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using MoodPlaylistGenerator.Models;
+using MoodPlaylist.SQLite.Repository.Models;
 
 namespace MoodPlaylistGenerator.ViewModels
 {
@@ -53,6 +53,7 @@ namespace MoodPlaylistGenerator.ViewModels
         public List<Mood> Moods { get; set; } = new();
         public int? SelectedMoodId { get; set; }
         public string SearchTerm { get; set; } = string.Empty;
+        public int? FilterMoodId { get; set; }
     }
 
     public class SongDetailViewModel
@@ -60,5 +61,6 @@ namespace MoodPlaylistGenerator.ViewModels
         public Song Song { get; set; } = null!;
         public string YouTubeVideoId { get; set; } = string.Empty;
         public List<Mood> AssignedMoods { get; set; } = new();
+        public List<Mood> AvailableMoods { get; set; } = new();
     }
 }
