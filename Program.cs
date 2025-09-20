@@ -15,9 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<SongService>();
-
-// TODO: Register MediaUploadService
-// builder.Services.AddScoped<IMediaUploadService, MediaUploadService>();
+builder.Services.AddScoped<IMediaUploadService, MediaUploadService>();
 builder.Services.AddScoped<PlaylistService>();
 
 // Add authentication

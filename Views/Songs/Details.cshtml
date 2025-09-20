@@ -65,12 +65,43 @@
     </div>
     
     <div class="col-md-4">
-        <!-- TODO: Check for local media files first -->
-        <!-- TODO: Add audio player for local audio files -->
-        <!-- TODO: Add video player for local video files -->
-        <!-- TODO: Add Rick Roll fallback when file not found -->
-        
-        @if (!string.IsNullOrEmpty(Model.YouTubeVideoId))
+        @if (Model.Song.MediaType == MoodPlaylistGenerator.Models.MediaType.LocalAudio || Model.Song.MediaType == MoodPlaylistGenerator.Models.MediaType.LocalVideo)
+        {
+            <div class="card">
+                <div class="card-header">
+                    <h5>🎵 Media Player</h5>
+                </div>
+                <div class="card-body p-0">
+                    @{
+                        var mediaUrl = ViewBag.MediaUrl as string ?? "";
+                        var fallbackUrl = ViewBag.FallbackUrl as string ?? "";
+                        var fileExists = ViewBag.FileExists as bool? ?? false;
+                    }
+                    @if (Model.Song.MediaType == MoodPlaylistGenerator.Models.MediaType.LocalAudio)
+                    {
+                        <audio controls class="w-100" style="height: 40px;">
+                            <source src="@mediaUrl" type="@Model.Song.ContentType" />
+                            <p>Your browser doesn't support HTML5 audio. <a href="@fallbackUrl" target="_blank">Play Rick Roll instead!</a></p>
+                        </audio>
+                    }
+                    else if (Model.Song.MediaType == MoodPlaylistGenerator.Models.MediaType.LocalVideo)
+                    {
+                        <video controls class="w-100" style="max-height: 300px;">
+                            <source src="@mediaUrl" type="@Model.Song.ContentType" />
+                            <p>Your browser doesn't support HTML5 video. <a href="@fallbackUrl" target="_blank">Play Rick Roll instead!</a></p>
+                        </video>
+                    }
+                    @if (!fileExists)
+                    {
+                        <div class="alert alert-warning m-2">
+                            <strong>File not found!</strong> The original media file is missing.<br />
+                            <a href="@fallbackUrl" target="_blank" class="btn btn-sm btn-outline-primary mt-2">🎬 Play Rick Roll instead</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        else if (!string.IsNullOrEmpty(Model.YouTubeVideoId))
         {
             <div class="card">
                 <div class="card-header">
@@ -78,27 +109,26 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="ratio ratio-16x9">
-                        <iframe src="https://www.youtube.com/embed/@Model.YouTubeVideoId" 
-                                title="YouTube video player" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                allowfullscreen>
-                        </iframe>
+                        <iframe src="https://www.youtube.com/embed/@Model.YouTubeVideoId" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
         }
+        @if (Model.Song.MediaType != MoodPlaylistGenerator.Models.MediaType.YouTube)
+        {
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5>📁 File Information</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>File Name:</strong> @Model.Song.FileName</p>
+                    <p><strong>Type:</strong> @Model.Song.ContentType</p>
+                    <p><strong>Size:</strong> @(Model.Song.FileSizeBytes.HasValue ? string.Format("{0:F2}", Model.Song.FileSizeBytes.Value / (1024.0 * 1024.0)) : "0.00") MB</p>
+                    <p><strong>Media Type:</strong> @Model.Song.MediaType</p>
+                </div>
+            </div>
+        }
         
-        <!-- TODO: Add placeholder for local media player -->
-        <div class="card mt-3">
-            <div class="card-header">
-                <h5>🎵 Local Media Player</h5>
-            </div>
-            <div class="card-body">
-                <p class="text-muted">TODO: Implement HTML5 audio/video player with Rick Roll fallback</p>
-            </div>
-        </div>
-
         @if (Model.AssignedMoods.Any())
         {
             <div class="card mt-3">

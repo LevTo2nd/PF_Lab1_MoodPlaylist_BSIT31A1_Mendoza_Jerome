@@ -10,10 +10,12 @@ namespace MoodPlaylistGenerator.Controllers
     public class SongsController : Controller
     {
         private readonly SongService _songService;
+        private readonly IMediaUploadService _mediaUploadService;
 
-        public SongsController(SongService songService)
+        public SongsController(SongService songService, IMediaUploadService mediaUploadService)
         {
             _songService = songService;
+            _mediaUploadService = mediaUploadService;
         }
 
         private int GetCurrentUserId()
@@ -92,22 +94,40 @@ namespace MoodPlaylistGenerator.Controllers
             }
 
             var userId = GetCurrentUserId();
-            
+
+            // Validate that either media file or YouTube URL is provided
+            if (model.MediaFile == null && string.IsNullOrEmpty(model.YouTubeUrl))
+            {
+                ModelState.AddModelError("", "Please either upload a media file or provide a YouTube URL.");
+                model.AvailableMoods = await _songService.GetAllMoodsAsync();
+                return View(model);
+            }
+
+            // Validate media file if provided
+            if (model.MediaFile != null && !_mediaUploadService.IsValidMediaFile(model.MediaFile))
+            {
+                ModelState.AddModelError("MediaFile", "Invalid media file. Please upload a valid audio or video file.");
+                model.AvailableMoods = await _songService.GetAllMoodsAsync();
+                return View(model);
+            }
+
             try
             {
-                await _songService.CreateSongAsync(
-                    model.Title, 
-                    model.Artist, 
-                    model.YouTubeUrl, 
-                    userId, 
-                    model.SelectedMoodIds);
+                await _songService.CreateSongWithMediaAsync(
+                    model.Title,
+                    model.Artist,
+                    userId,
+                    model.SelectedMoodIds,
+                    model.MediaFile,
+                    model.YouTubeUrl,
+                    _mediaUploadService);
 
                 TempData["SuccessMessage"] = "Song added successfully!";
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                ModelState.AddModelError("", "An error occurred while adding the song.");
+                ModelState.AddModelError("", "An error occurred while adding the song: " + ex.Message);
                 model.AvailableMoods = await _songService.GetAllMoodsAsync();
                 return View(model);
             }
