@@ -140,5 +140,28 @@ namespace MoodPlaylistGenerator.Services
 
             return "";
         }
+        
+        // TODO: Implement method to create song with media file
+        /*
+        public async Task<Song> CreateSongWithMediaAsync(string title, string artist, int userId, List<int> moodIds, IFormFile? mediaFile = null, string? youtubeUrl = null)
+        {
+            // TODO: Create new Song object
+            // TODO: Handle media file upload if provided
+            // TODO: Set YouTube URL if no media file
+            // TODO: Save to database
+            // TODO: Add mood associations
+        }
+        */
+        
+        // TODO: Implement method to get playable URL
+        /*
+        public string GetPlayableUrl(Song song, IMediaUploadService mediaUploadService)
+        {
+            // TODO: Check if local media file exists
+            // TODO: Return local file URL if available
+            // TODO: Fallback to YouTube URL
+            // TODO: Fallback to Rick Roll if nothing available
+        }
+        */
     }
 }

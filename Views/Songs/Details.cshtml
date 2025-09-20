@@ -65,11 +65,16 @@
     </div>
     
     <div class="col-md-4">
+        <!-- TODO: Check for local media files first -->
+        <!-- TODO: Add audio player for local audio files -->
+        <!-- TODO: Add video player for local video files -->
+        <!-- TODO: Add Rick Roll fallback when file not found -->
+        
         @if (!string.IsNullOrEmpty(Model.YouTubeVideoId))
         {
             <div class="card">
                 <div class="card-header">
-                    <h5>🎬 Preview</h5>
+                    <h5>🎬 YouTube Preview</h5>
                 </div>
                 <div class="card-body p-0">
                     <div class="ratio ratio-16x9">
@@ -83,6 +88,16 @@
                 </div>
             </div>
         }
+        
+        <!-- TODO: Add placeholder for local media player -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5>🎵 Local Media Player</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">TODO: Implement HTML5 audio/video player with Rick Roll fallback</p>
+            </div>
+        </div>
 
         @if (Model.AssignedMoods.Any())
         {

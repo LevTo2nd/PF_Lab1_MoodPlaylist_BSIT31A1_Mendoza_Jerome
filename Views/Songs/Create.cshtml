@@ -10,7 +10,8 @@
                 <h3>🎵 Add New Song</h3>
             </div>
             <div class="card-body">
-                <form asp-action="Create">
+                <!-- TODO: Add enctype for file upload -->
+                <form asp-action="Create" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
                     
                     <div class="row">
@@ -30,10 +31,22 @@
                         </div>
                     </div>
 
+                    <!-- TODO: Add media upload section here -->
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h5>Choose Media Source</h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- TODO: Add file upload input -->
+                            <!-- TODO: Accept audio/* and video/* files -->
+                            <p class="text-muted">TODO: Implement file upload functionality</p>
+                        </div>
+                    </div>
+                    
                     <div class="mb-3">
-                        <label asp-for="YouTubeUrl" class="form-label"></label>
+                        <label asp-for="YouTubeUrl" class="form-label">YouTube URL (alternative)</label>
                         <input asp-for="YouTubeUrl" class="form-control" placeholder="https://www.youtube.com/watch?v=..." />
-                        <div class="form-text">Paste the full YouTube URL for this song</div>
+                        <div class="form-text">Use this if no local file is uploaded</div>
                         <span asp-validation-for="YouTubeUrl" class="text-danger"></span>
                     </div>
 

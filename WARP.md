@@ -41,6 +41,18 @@ The application includes a TestController with API endpoints for backend testing
 curl http://localhost:5215/api/test/status
 curl http://localhost:5215/api/test/moods
 curl -X POST http://localhost:5215/api/test/test-user
+curl -X POST http://localhost:5215/api/test/test-song
+curl -X POST http://localhost:5215/api/test/test-playlist
+curl http://localhost:5215/api/test/database-info
+```
+
+### Publishing
+```bash
+# Publish the application (self-contained for Windows)
+dotnet publish -c Release -r win-x64 --self-contained
+
+# Publish as a framework-dependent app
+dotnet publish -c Release
 ```
 
 ## Architecture Overview
@@ -103,6 +115,48 @@ User scoping enforced in services:
 ```csharp
 // All queries filtered by authenticated user
 .Where(entity => entity.UserId == userId)
+```
+
+### Important Code Patterns
+
+**Service Layer Pattern:**
+All business logic is encapsulated in services rather than controllers:
+```csharp
+// Controller pattern
+public async Task<IActionResult> GeneratePlaylist(int moodId, int count, string name)
+{
+    var userId = User.GetUserId();
+    var playlist = await _playlistService.GeneratePlaylistAsync(userId, moodId, count, name);
+    return RedirectToAction("Details", new { id = playlist.Id });
+}
+```
+
+**View Model Pattern:**
+All data transfer between controllers and views uses ViewModels:
+```csharp
+// Transforming domain models to view models
+var viewModel = new SongDetailsViewModel
+{
+    Song = song,
+    SelectedMoodIds = song.SongMoods.Select(sm => sm.MoodId).ToList(),
+    AllMoods = await _context.Moods.ToListAsync()
+};
+```
+
+**Transaction Pattern:**
+Entity Framework operations are grouped in transactions when needed:
+```csharp
+// Using transactions for multi-step operations
+using var transaction = await _context.Database.BeginTransactionAsync();
+try {
+    // Multiple database operations
+    await _context.SaveChangesAsync();
+    await transaction.CommitAsync();
+}
+catch {
+    await transaction.RollbackAsync();
+    throw;
+}
 ```
 
 This architecture supports the core workflow: Users add YouTube songs → tag with moods → generate randomized playlists by mood selection.
